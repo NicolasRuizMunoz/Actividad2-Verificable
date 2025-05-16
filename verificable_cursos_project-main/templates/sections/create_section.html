@@ -1,0 +1,76 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Crear Sección{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-6">
+
+    <div class="card shadow rounded-4">
+      <div class="card-body p-4">
+        <h3 class="card-title mb-4 text-center">📝 Crear Sección</h3>
+
+        <form action="" method="post">
+          <div class="mb-3">
+            <label for="section_number" class="form-label">Número de Sección</label>
+            <input
+              type="text"
+              class="form-control"
+              id="section_number"
+              name="section_number"
+              value="{{ form.section_number }}"
+              placeholder="Ingrese el número de la sección"
+              required
+            >
+          </div>
+
+          <div class="mb-3">
+            <label for="evaluation_scheme" class="form-label">Esquema de Evaluación</label>
+            <select
+              id="evaluation_scheme"
+              name="evaluation_scheme"
+              class="form-select"
+              required
+            >
+              <option value="" disabled {% if not form.evaluation_scheme %}selected{% endif %}>
+                Seleccione esquema
+              </option>
+              <option value="percentage" {% if form.evaluation_scheme == 'percentage' %}selected{% endif %}>
+                Porcentaje
+              </option>
+              <option value="weight" {% if form.evaluation_scheme == 'weight' %}selected{% endif %}>
+                Peso
+              </option>
+            </select>
+          </div>
+
+
+          {% if errors %}
+            <div class="alert alert-danger mt-3">
+              <ul class="mb-0">
+                {% for err in errors %}
+                  <li><strong>{{ err.field }}:</strong> {{ err.msg }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          {% elif error %}
+            <div class="alert alert-danger mt-3">{{ error }}</div>
+          {% endif %}
+
+          <div class="d-grid mt-4">
+            <button type="submit" class="btn btn-primary">✅ Crear Sección</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="text-center mt-3">
+      <a href="{{ referrer or url_for('course_instances.course_instance_detail', course_id=course.id, instance_id=instance.id) }}"
+         class="btn btn-outline-secondary btn-sm">
+        ← Volver
+      </a>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,11 @@
+__pycache__/
+.coverage
+.pytest_cache/
+htmlcov/
+.env
+.venv
+complex_schedule.xlsx
+course_schedule.xlsx
+test_scheduling.py
+test_scheduling_complex.py
+schedule.xlsx

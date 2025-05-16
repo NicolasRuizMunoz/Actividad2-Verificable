@@ -1,0 +1,59 @@
+{
+    "salas": [
+        {
+            "id": 1,
+            "nombre": "Reloj 102",
+            "capacidad": 17
+        },
+        {
+            "id": 2,
+            "nombre": "Reloj 103",
+            "capacidad": 26
+        },
+        {
+            "id": 3,
+            "nombre": "Reloj 104",
+            "capacidad": 34
+        },
+        {
+            "id": 4,
+            "nombre": "Biblioteca 301",
+            "capacidad": 39
+        },
+        {
+            "id": 5,
+            "nombre": "Biblioteca 302",
+            "capacidad": 36
+        },
+        {
+            "id": 6,
+            "nombre": "Humanidades 201",
+            "capacidad": 33
+        },
+        {
+            "id": 7,
+            "nombre": "Humanidades 202",
+            "capacidad": 12
+        },
+        {
+            "id": 8,
+            "nombre": "Humanidades 203",
+            "capacidad": 30
+        },
+        {
+            "id": 9,
+            "nombre": "Ciencias 505",
+            "capacidad": 35
+        },
+        {
+            "id": 10,
+            "nombre": "Ciencias 506",
+            "capacidad": 45
+        },
+        {
+            "id": 11,
+            "nombre": "Ciencias 507",
+            "capacidad": 43
+        }
+    ]
+}

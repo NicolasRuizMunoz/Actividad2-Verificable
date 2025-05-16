@@ -1,0 +1,96 @@
+{% extends 'base/base.html' %}
+{% block title %}Agregar Instancia{% endblock %}
+{% block content %}
+<div class="container py-5">
+  <div class="card shadow rounded-4">
+    <div class="card-body">
+      <h3 class="card-title mb-4">➕ Agregar Instancia a "{{ evaluation.name }}"</h3>
+      {% if errors %}
+        <div class="alert alert-danger">
+          <ul class="mb-0">
+            {% for err in errors %}
+              <li><strong>{{ err.field }}:</strong> {{ err.msg }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+      {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+      {% endif %}
+      <form method="POST" action="{{ url_for(
+          'evaluation_instances.create_evaluation_instance',
+          course_id=course.id,
+          instance_id=instance.id,
+          section_id=section.id,
+          evaluation_id=evaluation.id
+      ) }}">
+        <input type="hidden" name="evaluation_id" value="{{ evaluation.id }}">
+
+        {% if instances and instances|length > 0 %}
+          <input type="hidden" name="weight_type" value="{{ instances[0].weight_type }}">
+          <div class="mb-3">
+            <label class="form-label">Tipo de Ponderación</label>
+            <input type="text" class="form-control" value="{{ instances[0].weight_type | scheme_es }}" disabled>
+          </div>
+        {% else %}
+          <div class="mb-3">
+            <label for="weight_type" class="form-label">Tipo de Ponderación</label>
+            <select id="weight_type" name="weight_type" class="form-select" required>
+              {% for key in ['percentage','weight'] %}
+                <option value="{{ key }}"
+                  {% if form.weight_type == key %}selected{% endif %}>
+                  {{ key | scheme_es }}
+                </option>
+              {% endfor %}
+            </select>
+          </div>
+        {% endif %}
+
+        <div class="mb-3">
+          <label class="form-label">Nombre de Instancia</label>
+          <input
+            type="text"
+            class="form-control"
+            name="name"
+            value="{{ form.name }}"
+            required
+          >
+        </div>
+        <div class="mb-3">
+          <label class="form-label">
+            Valor de la Ponderación
+          </label>
+          <input
+            type="number"
+            step="0.01"
+            class="form-control"
+            name="weight"
+            value="{{ form.weight }}"
+            required
+          >
+        </div>
+        <div class="form-check mb-3">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            name="is_optional"
+            id="is_optional"
+            {% if form.is_optional %}checked{% endif %}
+          >
+          <label class="form-check-label" for="is_optional">Marcar como opcional</label>
+        </div>
+        <div class="d-flex justify-content-between">
+          <a href="{{ url_for(
+                'evaluations.detail_evaluation',
+                course_id=course.id,
+                instance_id=instance.id,
+                section_id=section.id,
+                evaluation_id=evaluation.id
+          ) }}" class="btn btn-outline-secondary">← Volver</a>
+          <button type="submit" class="btn btn-primary">➕ Agregar Instancia</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

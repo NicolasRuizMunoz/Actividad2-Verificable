@@ -1,0 +1,35 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Alumnos{% endblock %}
+
+{% block content %}
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Alumnos</h2>
+        <a href="/students/create" class="btn btn-primary">➕ Crear Alumno</a>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Fecha de Ingreso</th>
+                <th></th> 
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in students %}
+            <tr>
+                <td>{{ student.name }}</td>
+                <td>{{ student.email }}</td>
+                <td>{{ student.enrollment_date.year }}</td>
+                <td>
+                    <a href="/students/{{ student.id }}" class="btn btn-sm btn-outline-secondary">Detalle</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

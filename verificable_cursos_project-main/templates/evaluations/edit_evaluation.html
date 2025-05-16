@@ -1,0 +1,99 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Editar Evaluación{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="card shadow rounded-4">
+    <div class="card-body">
+      <h3 class="card-title text-center mb-4">✏️ Editar Evaluación</h3>
+
+      {% if errors %}
+        <div class="alert alert-danger">
+          <ul class="mb-0">
+            {% for err in errors %}
+              <li><strong>{{ err.field }}:</strong> {{ err.msg }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% elif error %}
+        <div class="alert alert-danger">{{ error }}</div>
+      {% endif %}
+
+      <form method="POST"
+            action="{{ url_for('evaluations.edit_evaluation',
+                                course_id=course.id,
+                                instance_id=instance.id,
+                                section_id=section_id,
+                                evaluation_id=evaluation.id) }}">
+
+        <input type="hidden" name="id" value="{{ evaluation.id }}">
+        <input type="hidden" name="course_instance_id" value="{{ instance.id }}">
+        <input type="hidden" name="section_id"         value="{{ section_id }}">
+
+        <div class="mb-3">
+          <label for="name" class="form-label">Nombre de la Evaluación</label>
+          <input
+            type="text"
+            class="form-control"
+            id="name"
+            name="name"
+            value="{{ form.name if form else evaluation.name }}"
+            placeholder="Ej: Parcial 1"
+            required
+          >
+        </div>
+
+        <div class="mb-3">
+          <label for="weight_type" class="form-label">Tipo de Ponderación</label>
+          <input
+            type="hidden"
+            name="weight_type"
+            value="{{ instance.evaluation_scheme }}"
+          >
+          <input
+            type="text"
+            class="form-control"
+            id="weight_type"
+            value="{{ instance.evaluation_scheme | scheme_es }}"
+            disabled
+          >
+        </div>
+
+
+        <div class="mb-3">
+          <label for="weight" class="form-label">
+            {% if instance.evaluation_scheme == 'percentage' %}
+              Porcentaje Total (%)
+            {% else %}
+              Peso Total
+            {% endif %}
+          </label>
+          <input
+            type="number"
+            step="0.01"
+            class="form-control"
+            id="weight"
+            name="weight"
+            value="{{ form.weight if form else evaluation.weight }}"
+            placeholder="Ej: 50"
+            required
+          >
+        </div>
+
+
+        <div class="d-flex justify-content-between mt-4">
+          <a href="{{ url_for('evaluations.detail_evaluation',
+                              course_id=course.id,
+                              instance_id=instance.id,
+                              section_id=section_id,
+                              evaluation_id=evaluation.id) }}"
+             class="btn btn-outline-secondary">← Cancelar</a>
+          <button type="submit" class="btn btn-success">💾 Guardar Cambios</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

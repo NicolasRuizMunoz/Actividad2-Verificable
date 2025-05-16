@@ -1,0 +1,89 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Crear Evaluación{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="card shadow-lg rounded-4">
+    <div class="card-body">
+      <h3 class="card-title text-center mb-4">➕ Crear Evaluación</h3>
+
+      {% if errors %}
+        <div class="alert alert-danger">
+          <ul class="mb-0">
+            {% for err in errors %}
+              <li><strong>{{ err.field }}:</strong> {{ err.msg }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% elif error %}
+        <div class="alert alert-danger">{{ error }}</div>
+      {% endif %}
+
+      <form method="POST">
+        <input 
+          type="hidden" 
+          name="course_instance_id" 
+          value="{{ instance.id }}"
+        >
+        {% if section_id is defined %}
+          <input 
+            type="hidden" 
+            name="section_id" 
+            value="{{ section_id }}"
+          >
+        {% endif %}
+
+        <div class="mb-3">
+          <label for="name" class="form-label">Nombre de la Evaluación</label>
+          <input 
+            id="name"
+            type="text" 
+            class="form-control"
+            name="name" 
+            value="{{ form.name }}" 
+            required
+          >
+        </div>
+
+        <div class="mb-3">
+          <label for="weight" class="form-label">
+            {% if section.evaluation_scheme == 'percentage' %}
+              Porcentaje dentro de la sección (%)
+            {% else %}
+              Peso relativo (pts)
+            {% endif %}
+          </label>
+          <input 
+            id="weight"
+            type="number" 
+            step="0.01" 
+            class="form-control"
+            name="weight" 
+            value="{{ form.weight }}" 
+            required
+          >
+        </div>
+
+        <div class="d-flex justify-content-between mt-4">
+          <a 
+            href="{{ url_for('sections.detail_section',
+                              course_id=course.id,
+                              instance_id=instance.id,
+                              section_id=section_id) }}"
+            class="btn btn-outline-secondary"
+          >
+            ← Cancelar
+          </a>
+          <button 
+            type="submit" 
+            class="btn btn-primary"
+          >
+            ✅ Crear Evaluación
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

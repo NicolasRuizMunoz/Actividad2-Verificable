@@ -1,0 +1,79 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Crear Alumno{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow rounded-4">
+        <div class="card-body p-4">
+          <h3 class="card-title mb-4 text-center">👨‍🎓 Crear Alumno</h3>
+          <form action="{{ url_for('students.create_student') }}" method="post">
+            <div class="mb-3">
+              <label for="nombre" class="form-label">Nombre</label>
+              <input
+                type="text"
+                id="nombre"
+                name="nombre"
+                class="form-control"
+                value="{{ form.nombre }}"
+                placeholder="Ingrese el nombre del alumno"
+                required
+              >
+            </div>
+            <div class="mb-3">
+              <label for="correo" class="form-label">Correo Electrónico</label>
+              <input
+                type="email"
+                id="correo"
+                name="correo"
+                class="form-control"
+                value="{{ form.correo }}"
+                placeholder="ejemplo@correo.com"
+                required
+              >
+            </div>
+            <div class="mb-3">
+              <label for="anio_ingreso" class="form-label">Año de Ingreso</label>
+              <input
+                type="number"
+                id="anio_ingreso"
+                name="anio_ingreso"
+                class="form-control"
+                min="{{ min_year }}"
+                max="{{ max_year }}"
+                value="{{ form.anio_ingreso }}"
+                placeholder="Ej: 2023"
+                required
+              >
+              <div class="form-text">
+                Ingresa solo el año ({{ min_year }}–{{ max_year }}).
+              </div>
+            </div>
+            {% if errors %}
+              <div class="alert alert-danger mt-3">
+                <ul class="mb-0">
+                  {% for err in errors %}
+                    <li><strong>{{ err.field }}:</strong> {{ err.msg }}</li>
+                  {% endfor %}
+                </ul>
+              </div>
+            {% elif error %}
+              <div class="alert alert-danger mt-3">{{ error }}</div>
+            {% endif %}
+            <div class="d-grid mt-4">
+              <button type="submit" class="btn btn-primary">✅ Crear Alumno</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="text-center mt-3">
+        <a href="{{ url_for('students.list_students') }}" class="btn btn-outline-secondary btn-sm">
+          ← Volver a Alumnos
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

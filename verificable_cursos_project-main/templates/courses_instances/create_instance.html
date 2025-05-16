@@ -1,0 +1,50 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Crear Instancia de Curso{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="card shadow rounded-4">
+      <div class="card-body p-4">
+        <h3 class="card-title mb-4 text-center">📅 Crear Instancia de Curso</h3>
+        <form action="{{ url_for('course_instances.create_course_instance', course_id=course.id) }}" method="post">
+          <div class="mb-3">
+            <label for="semester" class="form-label">Semestre</label>
+            <select id="semester" name="semester" class="form-select" required>
+              <option value="" disabled {% if not form.semester %}selected{% endif %}>Seleccione semestre</option>
+              <option value="01" {% if form.semester == '01' %}selected{% endif %}>01 - Primer Semestre</option>
+              <option value="02" {% if form.semester == '02' %}selected{% endif %}>02 - Segundo Semestre</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="year" class="form-label">Año</label>
+            <input type="number" class="form-control" id="year" name="year"
+                   value="{{ form.year }}" min="2000" max="{{ current_year }}"
+                   placeholder="Ej: 2025" required>
+          </div>
+          {% if errors %}
+            <div class="alert alert-danger mt-3">
+              <ul class="mb-0">
+                {% for err in errors %}
+                  <li>{{ err.field|default('') }}: {{ err.msg }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          {% elif error %}
+            <div class="alert alert-danger mt-3" role="alert">
+              {{ error }}
+            </div>
+          {% endif %}
+          <div class="d-grid mt-4">
+            <button type="submit" class="btn btn-primary">✅ Crear Instancia</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="text-center mt-3">
+      <a href="{{ referrer or url_for('courses.course_detail', course_id=course.id) }}" class="btn btn-outline-secondary btn-sm">← Volver a Curso</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

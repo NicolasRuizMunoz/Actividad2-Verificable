@@ -1,0 +1,72 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Editar Alumno{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+  <div class="card shadow rounded-4">
+    <div class="card-body">
+      <h3 class="card-title text-center mb-4">✏️ Editar Alumno</h3>
+      <form method="post" action="{{ url_for('students.edit_student', student_id=student.id) }}">
+        <div class="mb-3">
+          <label for="nombre" class="form-label">Nombre</label>
+          <input
+            type="text"
+            id="nombre"
+            name="nombre"
+            class="form-control"
+            value="{{ form.nombre if form else student.name }}"
+            placeholder="Ingrese el nombre del alumno"
+            required
+          >
+        </div>
+        <div class="mb-3">
+          <label for="correo" class="form-label">Correo Electrónico</label>
+          <input
+            type="email"
+            id="correo"
+            name="correo"
+            class="form-control"
+            value="{{ form.correo if form else student.email }}"
+            placeholder="ejemplo@correo.com"
+            required
+          >
+        </div>
+        <div class="mb-3">
+          <label for="anio_ingreso" class="form-label">Año de Ingreso</label>
+          <input
+            type="number"
+            id="anio_ingreso"
+            name="anio_ingreso"
+            class="form-control"
+            min="{{ min_year }}"
+            max="{{ max_year }}"
+            value="{{ form.anio_ingreso if form else student.enrollment_date.year }}"
+            placeholder="Ej: {{ min_year }}"
+            required
+          >
+          <div class="form-text">
+            Ingresa solo el año ({{ min_year }}–{{ max_year }}).
+          </div>
+        </div>
+        {% if errors %}
+          <div class="alert alert-danger mt-3">
+            <ul class="mb-0">
+              {% for err in errors %}
+                <li><strong>{{ err.field }}:</strong> {{ err.msg }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% elif error %}
+          <div class="alert alert-danger mt-3">{{ error }}</div>
+        {% endif %}
+        <div class="d-flex justify-content-between mt-4">
+          <a href="{{ url_for('students.student_detail', student_id=student.id) }}" class="btn btn-secondary">← Cancelar</a>
+          <button type="submit" class="btn btn-success">💾 Guardar Cambios</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

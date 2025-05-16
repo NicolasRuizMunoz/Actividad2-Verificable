@@ -1,0 +1,30 @@
+{
+    "año": 2025,
+    "semestre": 1,
+    "instancias": [
+        {
+            "id": 1,
+            "curso_id": 20
+        },
+        {
+            "id": 2,
+            "curso_id": 19
+        },
+        {
+            "id": 3,
+            "curso_id": 18
+        },
+        {
+            "id": 4,
+            "curso_id": 17
+        },
+        {
+            "id": 19,
+            "curso_id": 2
+        },
+        {
+            "id": 20,
+            "curso_id": 1
+        }
+    ]
+}

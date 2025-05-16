@@ -1,0 +1,211 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Detalle Evaluación{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+  <div class="card shadow rounded-4">
+    <div class="card-body">
+      <h3 class="card-title mb-4">📊 Detalle de Evaluación</h3>
+
+      {% if errors %}
+        <div class="alert alert-danger">
+          <ul class="mb-0">
+            {% for err in errors %}
+              <li><strong>{{ err.field }}:</strong> {{ err.msg }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% elif error %}
+        <div class="alert alert-danger">{{ error }}</div>
+      {% endif %}
+
+      <form method="POST" action="{{ url_for(
+          'evaluations.edit_evaluation',
+          course_id=course.id,
+          instance_id=instance.id,
+          section_id=section_id,
+          evaluation_id=evaluation.id
+      ) }}">
+        <input type="hidden" name="id" value="{{ evaluation.id }}">
+        <input type="hidden" name="course_instance_id" value="{{ instance.id }}">
+        <input type="hidden" name="section_id" value="{{ section_id }}">
+
+        <div class="mb-3">
+          <label class="form-label">Nombre</label>
+          <input
+            type="text"
+            class="form-control"
+            name="name"
+            value="{{ form.name if form else evaluation.name }}"
+            {% if not edit_mode %}disabled{% endif %}
+            required
+          >
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Tipo de Ponderación</label>
+          {% if edit_mode %}
+            <select class="form-select" name="weight_type" required>
+              <option value="percentage"
+                {% if (form.weight_type if form else evaluation.weight_type)=='percentage' %}selected{% endif %}>
+                Porcentaje
+              </option>
+              <option value="weight"
+                {% if (form.weight_type if form else evaluation.weight_type)=='weight' %}selected{% endif %}>
+                Peso
+              </option>
+            </select>
+          {% else %}
+            <input type="hidden" name="weight_type" value="{{ evaluation.weight_type }}">
+            <input
+              type="text"
+              class="form-control"
+              value="{% if evaluation.weight_type=='percentage' %}Porcentaje{% else %}Peso{% endif %}"
+              disabled
+            >
+          {% endif %}
+        </div>
+
+        <div class="mb-3">
+        <label class="form-label">
+          {% if instance.evaluation_scheme == 'percentage' %}
+            Porcentaje Total (%)
+          {% else %}
+            Peso Total
+          {% endif %}
+        </label>
+          <input
+            type="number"
+            step="0.01"
+            class="form-control"
+            name="weight"
+            value="{{ form.weight if form else evaluation.weight }}"
+            {% if not edit_mode %}disabled{% endif %}
+            required
+          >
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mt-4">
+          <a href="{{ url_for(
+                'sections.detail_section',
+                course_id=course.id,
+                instance_id=instance.id, 
+                section_id=section_id
+            ) }}" class="btn btn-outline-secondary">← Volver</a>
+          {% if edit_mode %}
+            <button type="submit" class="btn btn-success">💾 Guardar Cambios</button>
+          {% endif %}
+        </div>
+      </form>
+
+      {% if not edit_mode %}
+        <div class="d-flex justify-content-end align-items-center mt-2">
+          {% if not course.closed %}
+            <a href="{{ url_for(
+                'evaluations.edit_evaluation',
+                course_id=course.id,
+                instance_id=instance.id,
+                section_id=section_id,
+                evaluation_id=evaluation.id
+            ) }}" class="btn btn-warning me-2">✏️ Editar</a>
+
+            <form method="POST" action="{{ url_for(
+                  'evaluations.delete_evaluation',
+                  course_id=course.id,
+                  instance_id=instance.id,
+                  section_id=section_id,
+                  evaluation_id=evaluation.id
+              ) }}"
+              onsubmit="return confirm('¿Estás seguro de eliminar esta evaluación?');">
+              <button type="submit" class="btn btn-danger">🗑️ Eliminar</button>
+            </form>
+          {% else %}
+            <button class="btn btn-warning me-2" disabled title="No se puede editar en un curso cerrado">✏️ Editar</button>
+            <button class="btn btn-danger" disabled title="No se puede eliminar en un curso cerrado">🗑️ Eliminar</button>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      <hr class="my-4">
+
+      <h4 class="mb-3">Instancias de la Evaluación</h4>
+      {% if instances %}
+        <ul class="list-group">
+          {% for inst_ev in instances %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <div>
+                <strong>{{ inst_ev.name }}</strong><br>
+                {% if inst_ev.weight_type == 'percentage' %}
+                  <span class="text-muted">Porcentaje: {{ inst_ev.weight }}%</span>
+                {% else %}
+                  <span class="text-muted">Peso: {{ inst_ev.weight }}</span>
+                {% endif %}
+
+                {% if inst_ev.is_optional %}
+                  <span class="badge bg-info ms-2">Opcional</span>
+                {% else %}
+                  <span class="badge bg-secondary ms-2">Obligatoria</span>
+                {% endif %}
+              </div>
+              <div>
+                {% if not course.closed %}
+                  <a href="{{ url_for(
+                      'evaluation_instances.edit_evaluation_instance',
+                      course_id=course.id,
+                      instance_id=instance.id,
+                      section_id=section_id,
+                      evaluation_id=evaluation.id,
+                      instance_ev_id=inst_ev.id
+                  ) }}" class="btn btn-sm btn-outline-primary">✏️ Editar</a>
+                  <form method="POST" action="{{ url_for(
+                        'evaluation_instances.delete_evaluation_instance',
+                        course_id=course.id,
+                        instance_id=instance.id,
+                        section_id=section_id,
+                        evaluation_id=evaluation.id,
+                        instance_ev_id=inst_ev.id
+                    ) }}" class="d-inline"
+                    onsubmit="return confirm('¿Seguro que deseas eliminar esta instancia?');">
+                    <button type="submit" class="btn btn-sm btn-outline-danger">🗑️ Eliminar</button>
+                  </form>
+                {% else %}
+                  <button class="btn btn-sm btn-outline-primary" disabled title="No se puede editar en un curso cerrado">✏️ Editar</button>
+                  <button class="btn btn-sm btn-outline-danger" disabled title="No se puede eliminar en un curso cerrado">🗑️ Eliminar</button>
+                {% endif %}
+              </div>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p class="text-muted">No hay instancias asociadas a esta evaluación aún.</p>
+      {% endif %}
+
+      <div class="text-end mt-3">
+        {% if not course.closed %}
+          <a href="{{ url_for(
+              'evaluation_instances.create_evaluation_instance',
+              course_id=course.id,
+              instance_id=instance.id,
+              section_id=evaluation.section_id,
+              evaluation_id=evaluation.id
+          ) }}" class="btn btn-outline-primary btn-sm">➕ Agregar Instancia</a>
+        {% else %}
+          <button class="btn btn-outline-primary btn-sm" disabled title="No se pueden agregar instancias en un curso cerrado">➕ Agregar Instancia</button>
+        {% endif %}
+      </div>
+
+      <p><strong>Estado del Curso:</strong> 
+        {% if course.closed %}
+          <span class="badge bg-danger">Cerrado</span>
+        {% else %}
+          <span class="badge bg-success">Abierto</span>
+        {% endif %}
+      </p>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

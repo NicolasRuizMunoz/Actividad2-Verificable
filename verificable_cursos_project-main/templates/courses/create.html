@@ -1,0 +1,125 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Crear Curso{% endblock %}
+
+{% block content %}
+<link
+  href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"
+  rel="stylesheet"
+/>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="card shadow rounded-4">
+      <div class="card-body p-4">
+        <h3 class="card-title mb-4 text-center">📚 Crear Curso</h3>
+
+        <form action="{{ url_for('courses.create_course') }}" method="post">
+          <div class="mb-3">
+            <label for="codigo" class="form-label">Código</label>
+            <input
+              type="text"
+              class="form-control"
+              id="codigo"
+              name="codigo"
+              value="{{ form.codigo }}"
+              placeholder="ICC1001"
+              required
+            >
+          </div>
+
+          <div class="mb-3">
+            <label for="descripcion" class="form-label">Descripción</label>
+            <input
+              type="text"
+              class="form-control"
+              id="descripcion"
+              name="descripcion"
+              value="{{ form.descripcion }}"
+              placeholder="Nombre del curso"
+              required
+            >
+          </div>
+
+          <div class="mb-3">
+            <label for="requisitos" class="form-label">Requisitos</label>
+            <select
+              id="requisitos"
+              name="requisitos"
+              class="form-control"
+              multiple="multiple"
+              style="width:100%;"
+            ></select>
+            <div class="form-text">
+              Busca y selecciona prerrequisitos (mínimo 3 caracteres).
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="creditos" class="form-label">Créditos</label>
+            <input
+              type="number"
+              class="form-control"
+              id="creditos"
+              name="creditos"
+              min="1"
+              max="30"
+              value="{{ form.creditos }}"
+              placeholder="1–30"
+              required
+            >
+          </div>
+
+          {% if errors %}
+          <div class="alert alert-danger mt-3">
+            <ul class="mb-0">
+              {% for err in errors %}
+                <li><strong>{{ err.field }}:</strong> {{ err.msg }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+          {% endif %}
+
+          <div class="d-grid mt-4">
+            <button type="submit" class="btn btn-primary">Crear Curso</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="text-center mt-3">
+      <a href="{{ referrer or url_for('courses.list_courses') }}"
+         class="btn btn-outline-secondary btn-sm">
+        ← Volver
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(function() {
+    $('#requisitos').select2({
+      placeholder: 'Escribe ICC1001',
+      minimumInputLength: 3,
+      ajax: {
+        url: "{{ url_for('courses.search_courses') }}",
+        dataType: 'json',
+        delay: 250,
+        data: params => ({ q: params.term }),
+        processResults: data => ({ results: data })
+      }
+    });
+
+    {% if form.requisitos %}
+      const existing = {{ form.requisitos | tojson }};
+      existing.forEach(code => {
+        const o = new Option(code, code, true, true);
+        $('#requisitos').append(o);
+      });
+      $('#requisitos').trigger('change');
+    {% endif %}
+  });
+</script>
+{% endblock %}

@@ -1,0 +1,29 @@
+{
+    "profesores": [
+        {
+            "id": 1,
+            "nombre": "Roberto Silva",
+            "correo": "roberto.silva@miuandes.com"
+        },
+        {
+            "id": 2,
+            "nombre": "Patricia Rojas",
+            "correo": "patricia.rojas@miuandes.com"
+        },
+        {
+            "id": 3,
+            "nombre": "Andrés Figueroa",
+            "correo": "andres.figueroa@miuandes.com"
+        },
+        {
+            "id": 4,
+            "nombre": "Verónica Herrera",
+            "correo": "veronica.herrera@miuandes.com"
+        },
+        {
+            "id": 5,
+            "nombre": "Gonzalo Castro",
+            "correo": "gonzalo.castro@miuandes.com"
+        }
+    ]
+}

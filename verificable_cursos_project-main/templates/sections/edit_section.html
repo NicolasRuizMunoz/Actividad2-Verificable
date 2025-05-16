@@ -1,0 +1,63 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Editar Sección{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="card shadow rounded-4">
+      <div class="card-body p-4">
+        <h3 class="card-title mb-4 text-center">✏️ Editar Sección</h3>
+        <form action="{{ url_for('sections.edit_section', course_id=course.id, instance_id=instance.id, section_id=section.id) }}" method="post">
+          <div class="mb-3">
+            <label for="section_number" class="form-label">Número de Sección</label>
+            <input
+              type="text"
+              id="section_number"
+              name="section_number"
+              class="form-control"
+              value="{{ form.section_number }}"
+              required
+            >
+          </div>
+          <div class="mb-3">
+            <label for="evaluation_scheme" class="form-label">Esquema de Evaluación</label>
+            <select
+              id="evaluation_scheme"
+              name="evaluation_scheme"
+              class="form-select"
+              required
+            >
+              <option value="percentage" {% if form.evaluation_scheme=='percentage' %}selected{% endif %}>Porcentaje</option>
+              <option value="weight"     {% if form.evaluation_scheme=='weight'     %}selected{% endif %}>Peso fijo</option>
+            </select>
+          </div>
+          {% if errors %}
+            <div class="alert alert-danger mt-3">
+              <ul class="mb-0">
+                {% for err in errors %}
+                  <li><strong>{{ err.field }}:</strong> {{ err.msg }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          {% elif error %}
+            <div class="alert alert-danger mt-3">{{ error }}</div>
+          {% endif %}
+          <div class="d-flex justify-content-between mt-4">
+            <a 
+              href="{{ url_for('sections.detail_section',
+                                course_id=course.id,
+                                instance_id=instance.id,
+                                section_id=section.id) }}" 
+              class="btn btn-secondary"
+            >
+              ← Cancelar
+            </a>
+            <button type="submit" class="btn btn-success">💾 Guardar Cambios</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

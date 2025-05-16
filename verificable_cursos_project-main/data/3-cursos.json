@@ -1,0 +1,183 @@
+{
+    "cursos": [
+        {
+            "id": 20,
+            "codigo": "ICC1001",
+            "descripcion": "Introducción a la Programación",
+            "requisitos": [],
+            "creditos": 2
+        },
+        {
+            "id": 19,
+            "codigo": "ICC1002",
+            "descripcion": "Estructuras de Datos",
+            "requisitos": [
+                "ICC1001"
+            ],
+            "creditos": 1
+        },
+        {
+            "id": 18,
+            "codigo": "ICC2001",
+            "descripcion": "Algoritmos y Complejidad",
+            "requisitos": [
+                "ICC1002"
+            ],
+            "creditos": 3
+        },
+        {
+            "id": 17,
+            "codigo": "ICC2002",
+            "descripcion": "Programación Orientada a Objetos",
+            "requisitos": [
+                "ICC1001"
+            ],
+            "creditos": 2
+        },
+        {
+            "id": 16,
+            "codigo": "ICC2003",
+            "descripcion": "Bases de Datos",
+            "requisitos": [
+                "ICC1002"
+            ],
+            "creditos": 3
+        },
+        {
+            "id": 15,
+            "codigo": "ICC3001",
+            "descripcion": "Sistemas Operativos",
+            "requisitos": [
+                "ICC2001"
+            ],
+            "creditos": 2
+        },
+        {
+            "id": 14,
+            "codigo": "ICC3002",
+            "descripcion": "Redes de Computadores",
+            "requisitos": [
+                "ICC2001"
+            ],
+            "creditos": 1
+        },
+        {
+            "id": 13,
+            "codigo": "ICC3003",
+            "descripcion": "Ingeniería de Software",
+            "requisitos": [
+                "ICC2002"
+            ],
+            "creditos": 4
+        },
+        {
+            "id": 12,
+            "codigo": "ICC3004",
+            "descripcion": "Computación Gráfica",
+            "requisitos": [
+                "ICC2001"
+            ],
+            "creditos": 1
+        },
+        {
+            "id": 11,
+            "codigo": "ICC4001",
+            "descripcion": "Inteligencia Artificial",
+            "requisitos": [
+                "ICC2001",
+                "ICC2003"
+            ],
+            "creditos": 4
+        },
+        {
+            "id": 10,
+            "codigo": "ICC4002",
+            "descripcion": "Aprendizaje Automático",
+            "requisitos": [
+                "ICC4001"
+            ],
+            "creditos": 1
+        },
+        {
+            "id": 9,
+            "codigo": "ICC4003",
+            "descripcion": "Criptografía y Seguridad",
+            "requisitos": [
+                "ICC3002"
+            ],
+            "creditos": 1
+        },
+        {
+            "id": 8,
+            "codigo": "ICC4004",
+            "descripcion": "Computación en la Nube",
+            "requisitos": [
+                "ICC3002"
+            ],
+            "creditos": 3
+        },
+        {
+            "id": 7,
+            "codigo": "ICC5001",
+            "descripcion": "Desarrollo de Aplicaciones Web",
+            "requisitos": [
+                "ICC3003"
+            ],
+            "creditos": 4
+        },
+        {
+            "id": 6,
+            "codigo": "ICC5002",
+            "descripcion": "Big Data y Análisis de Datos",
+            "requisitos": [
+                "ICC4001"
+            ],
+            "creditos": 4
+        },
+        {
+            "id": 5,
+            "codigo": "ICC5003",
+            "descripcion": "Ciberseguridad",
+            "requisitos": [
+                "ICC4003"
+            ],
+            "creditos": 1
+        },
+        {
+            "id": 4,
+            "codigo": "ICC5004",
+            "descripcion": "Robótica e Internet de las Cosas",
+            "requisitos": [
+                "ICC4001"
+            ],
+            "creditos": 1
+        },
+        {
+            "id": 3,
+            "codigo": "ICC6001",
+            "descripcion": "Desarrollo de Videojuegos",
+            "requisitos": [
+                "ICC3004"
+            ],
+            "creditos": 2
+        },
+        {
+            "id": 2,
+            "codigo": "ICC6002",
+            "descripcion": "Computación Cuántica",
+            "requisitos": [
+                "ICC4001"
+            ],
+            "creditos": 4
+        },
+        {
+            "id": 1,
+            "codigo": "ICC6003",
+            "descripcion": "Diseño de Software Verificable",
+            "requisitos": [
+                "ICC3003"
+            ],
+            "creditos": 2
+        }
+    ]
+}

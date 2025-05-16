@@ -1,0 +1,64 @@
+{
+    "alumnos": [
+        {
+            "id": 1,
+            "nombre": "Juan Pérez",
+            "correo": "juan.perez@miuandes.com",
+            "anio_ingreso": 2021
+        },
+        {
+            "id": 2,
+            "nombre": "María Gómez",
+            "correo": "maria.gomez@miuandes.com",
+            "anio_ingreso": 2020
+        },
+        {
+            "id": 3,
+            "nombre": "Carlos Rodríguez",
+            "correo": "carlos.rodriguez@miuandes.com",
+            "anio_ingreso": 2019
+        },
+        {
+            "id": 4,
+            "nombre": "Ana Martínez",
+            "correo": "ana.martinez@miuandes.com",
+            "anio_ingreso": 2022
+        },
+        {
+            "id": 5,
+            "nombre": "Pedro Fernández",
+            "correo": "pedro.fernandez@miuandes.com",
+            "anio_ingreso": 2023
+        },
+        {
+            "id": 6,
+            "nombre": "Laura Sánchez",
+            "correo": "laura.sanchez@miuandes.com",
+            "anio_ingreso": 2021
+        },
+        {
+            "id": 7,
+            "nombre": "Diego López",
+            "correo": "diego.lopez@miuandes.com",
+            "anio_ingreso": 2020
+        },
+        {
+            "id": 8,
+            "nombre": "Sofía Ramírez",
+            "correo": "sofia.ramirez@miuandes.com",
+            "anio_ingreso": 2018
+        },
+        {
+            "id": 9,
+            "nombre": "Fernando Torres",
+            "correo": "fernando.torres@miuandes.com",
+            "anio_ingreso": 2017
+        },
+        {
+            "id": 10,
+            "nombre": "Elena Castro",
+            "correo": "elena.castro@miuandes.com",
+            "anio_ingreso": 2022
+        }
+    ]
+}

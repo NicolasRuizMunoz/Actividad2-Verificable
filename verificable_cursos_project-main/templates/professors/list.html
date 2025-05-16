@@ -1,0 +1,34 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Profesores{% endblock %}
+
+{% block content %}
+
+    <div class="d-flex justify-content-between align-items-center mb-3 mt-5">
+        <h2>Profesores</h2>
+        <a href="/professors/create" class="btn btn-primary">➕ Crear Profesor</a>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th></th> 
+            </tr>
+        </thead>
+        <tbody>
+            {% for professor in professors %}
+            <tr>
+                <td>{{ professor.name }}</td>
+                <td>{{ professor.email }}</td>
+                <td>
+                    <a href="/professors/{{ professor.id }}" class="btn btn-sm btn-outline-secondary">Detalle</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
+

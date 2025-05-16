@@ -1,0 +1,27 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Detalle Profesor{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="card shadow-lg rounded-4">
+        <div class="card-body">
+            <h3 class="card-title text-center mb-4">👨‍🏫 Detalle del Profesor</h3>
+
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><strong>Nombre:</strong> {{ professor.name }}</li>
+                <li class="list-group-item"><strong>Email:</strong> {{ professor.email }}</li>
+            </ul>
+
+            <div class="d-flex justify-content-between mt-4">
+                <a href="/" class="btn btn-outline-primary">← Volver</a>
+                <a href="/professors/{{ professor.id }}/edit" class="btn btn-warning">✏️ Editar</a>
+                <form method="POST" action="/professors/{{ professor.id }}/delete" onsubmit="return confirm('¿Estás seguro de eliminar este profesor?');">
+                    <button type="submit" class="btn btn-danger">🗑️ Eliminar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

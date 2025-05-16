@@ -1,0 +1,44 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Cursos{% endblock %}
+
+{% block content %}
+    <div class="d-flex justify-content-between align-items-center mb-3 mt-5">
+        <h2>Cursos</h2>
+        <a href="{{ url_for('courses.create_course') }}" class="btn btn-primary">➕ Crear Curso</a>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Nombre</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for course in courses %}
+            <tr>
+                <td>{{ course.code }}</td>
+                <td>{{ course.description }}</td>
+                <td>
+                    {% if course.closed %}
+                        <span class="badge bg-danger">Cerrado</span>
+                    {% else %}
+                        <span class="badge bg-success">Abierto</span>
+                    {% endif %}
+                </td>
+                <td class="text-nowrap">
+                    <a href="{{ url_for('courses.course_detail', course_id=course.id) }}" class="btn btn-sm btn-outline-secondary">Detalle</a>
+                    <form method="POST" action="{{ url_for('courses.close_course', course_id=course.id) }}" class="d-inline">
+                        <button type="submit" class="btn btn-sm btn-danger ms-1" {% if course.closed %}disabled{% endif %} onclick="return confirm('¿Está seguro que desea cerrar este curso? Esta acción no se puede deshacer.')">
+                            Cerrar Curso
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

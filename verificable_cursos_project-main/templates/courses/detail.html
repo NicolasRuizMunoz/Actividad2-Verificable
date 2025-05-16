@@ -1,0 +1,79 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Detalle Curso{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="card shadow-lg rounded-4">
+    <div class="card-body">
+      <h3 class="card-title text-center mb-4">📘 Detalle del Curso</h3>
+
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          <strong>Código:</strong> {{ course.code }}
+        </li>
+        <li class="list-group-item">
+          <strong>Nombre:</strong> {{ course.description }}
+        </li>
+        <li class="list-group-item">
+          <strong>Pre-requisitos:</strong>
+          {% if course.requisites %}
+            {{ course.requisites | join(', ') }}
+          {% else %}
+            No hay prerequisitos
+          {% endif %}
+        </li>
+        <li class="list-group-item">
+          <strong>Créditos:</strong> {{ course.credits }}
+        </li>
+        <li class="list-group-item">
+          <strong>Estado:</strong> 
+          {% if course.closed %}
+            <span class="badge bg-danger">Cerrado</span>
+          {% else %}
+            <span class="badge bg-success">Abierto</span>
+          {% endif %}
+        </li>
+      </ul>
+
+      <div class="d-flex justify-content-between mt-4">
+        <a href="{{ url_for('courses.list_courses') }}"
+           class="btn btn-outline-secondary btn-sm">← Volver</a>
+        {% if not course.closed %}
+        <a href="{{ url_for('courses.edit_course', course_id=course.id) }}"
+           class="btn btn-warning">✏️ Editar</a>
+        <form method="post"
+              action="{{ url_for('courses.delete_course', course_id=course.id) }}"
+              onsubmit="return confirm('¿Estás seguro de eliminar este curso?');">
+          <button type="submit" class="btn btn-danger">🗑️ Eliminar</button>
+        </form>
+        {% endif %}
+        {% if not course.closed %}
+        <a href="{{ url_for('course_instances.create_course_instance', course_id=course.id) }}"
+           class="btn btn-success">📅 Crear Instancia</a>
+        {% else %}
+        <button class="btn btn-success" disabled title="No se pueden crear instancias en un curso cerrado">📅 Crear Instancia</button>
+        {% endif %}
+      </div>
+
+      <h4 class="mt-5">Instancias del Curso</h4>
+      <ul class="list-group list-group-flush">
+        {% if instances %}
+          {% for instance in instances %}
+            <li class="list-group-item">
+              <strong>Semestre:</strong> {{ instance.semester }}
+              <strong>Año:</strong> {{ instance.year }}
+              <a href="{{ url_for('course_instances.course_instance_detail',
+                    course_id=course.id,
+                    instance_id=instance.id) }}"
+                 class="btn btn-info btn-sm float-end">Ver Instancia</a>
+            </li>
+          {% endfor %}
+        {% else %}
+          <li class="list-group-item">No hay instancias creadas</li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}

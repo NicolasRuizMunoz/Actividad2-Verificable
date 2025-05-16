@@ -1,0 +1,27 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Detalle Alumno{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="card shadow-lg rounded-4">
+    <div class="card-body">
+      <h3 class="card-title text-center mb-4">👨‍🎓 Detalle del Alumno</h3>
+
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item"><strong>Nombre:</strong> {{ student.name }}</li>
+        <li class="list-group-item"><strong>Email:</strong> {{ student.email }}</li>
+        <li class="list-group-item"><strong>Año de Ingreso:</strong> {{ student.enrollment_date.year }}</li>
+      </ul>
+
+      <div class="d-flex justify-content-between mt-4">
+        <a href="{{ url_for('students.list_students') }}" class="btn btn-outline-primary">← Volver</a>
+        <a href="{{ url_for('students.edit_student', student_id=student.id) }}" class="btn btn-warning">✏️ Editar</a>
+        <form method="POST" action="{{ url_for('students.delete_student', student_id=student.id) }}" onsubmit="return confirm('¿Estás seguro de eliminar este alumno?');">
+          <button type="submit" class="btn btn-danger">🗑️ Eliminar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

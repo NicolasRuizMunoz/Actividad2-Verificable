@@ -1,0 +1,75 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Detalle Instancia de Curso{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="card shadow-lg rounded-4">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3 class="card-title">📘 Detalle de la Instancia del Curso</h3>
+        <div>
+          {% if not course.closed %}
+          <a href="{{ url_for('course_instances.edit_course_instance', course_id=course.id, instance_id=instance.id) }}" class="btn btn-warning btn-sm me-2" title="Editar Instancia">✏️</a>
+          <form action="{{ url_for('course_instances.delete_course_instance', course_id=course.id, instance_id=instance.id) }}" method="post" class="d-inline" onsubmit="return confirm('¿Seguro que desea eliminar esta instancia?');">
+            <button type="submit" class="btn btn-danger btn-sm" title="Eliminar Instancia">🗑️</button>
+          </form>
+          {% else %}
+          <button class="btn btn-warning btn-sm me-2" disabled title="No se puede editar la instancia en un curso cerrado">✏️</button>
+          <button class="btn btn-danger btn-sm" disabled title="No se puede eliminar la instancia en un curso cerrado">🗑️</button>
+          {% endif %}
+        </div>
+      </div>
+
+      <ul class="list-group list-group-flush mb-4">
+        <li class="list-group-item"><strong>Semestre:</strong> {{ instance.semester }}</li>
+        <li class="list-group-item"><strong>Año:</strong> {{ instance.year }}</li>
+        <li class="list-group-item"><strong>Estado del Curso:</strong> 
+          {% if course.closed %}
+          <span class="badge bg-danger">Cerrado</span>
+          {% else %}
+          <span class="badge bg-success">Abierto</span>
+          {% endif %}
+        </li>
+      </ul>
+
+      <div class="d-flex justify-content-start mb-4">
+        {% if not course.closed %}
+        <a href="{{ url_for('sections.create_section', course_id=course.id, instance_id=instance.id) }}" class="btn btn-success btn-sm">📝 Crear Sección</a>
+        {% else %}
+        <button class="btn btn-success btn-sm" disabled title="No se pueden crear secciones en un curso cerrado">📝 Crear Sección</button>
+        {% endif %}
+      </div>
+
+      <h4 class="mt-4">Secciones</h4>
+      <ul class="list-group list-group-flush mb-4">
+        {% for section in sections %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <span><strong>Sección:</strong> {{ section.section_number }}</span>
+          <div>
+            <a href="{{ url_for('sections.detail_section', course_id=course.id, instance_id=instance.id, section_id=section.id) }}" class="btn btn-info btn-sm me-2">🔍 Ver Sección</a>
+          </div>
+        </li>
+        {% else %}
+        <li class="list-group-item text-muted">No hay secciones registradas.</li>
+        {% endfor %}
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+<style>
+  .carousel-control-prev,
+  .carousel-control-next {
+    width: 5%;
+  }
+  .carousel-control-prev-icon,
+  .carousel-control-next-icon {
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 50%;
+    padding: 10px;
+  }
+</style>
+
+{% endblock %}

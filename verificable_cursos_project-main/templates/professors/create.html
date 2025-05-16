@@ -1,0 +1,67 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Crear Profesor{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-6">
+
+    <div class="card shadow rounded-4">
+      <div class="card-body p-4">
+        <h3 class="card-title mb-4 text-center">👨‍🏫 Crear Profesor</h3>
+
+        <form action="{{ url_for('professors.create_professor') }}" method="post">
+          <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input
+              type="text"
+              class="form-control"
+              id="nombre"
+              name="nombre"
+              value="{{ form.nombre }}"
+              placeholder="Ingrese el nombre del profesor"
+              required
+            >
+          </div>
+
+          <div class="mb-3">
+            <label for="correo" class="form-label">Correo Electrónico</label>
+            <input
+              type="email"
+              class="form-control"
+              id="correo"
+              name="correo"
+              value="{{ form.correo }}"
+              placeholder="ejemplo@correo.com"
+              required
+            >
+          </div>
+
+          {% if errors %}
+            <div class="alert alert-danger mt-3">
+              <ul class="mb-0">
+                {% for err in errors %}
+                  <li><strong>{{ err.field }}:</strong> {{ err.msg }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          {% elif error %}
+            <div class="alert alert-danger mt-3">{{ error }}</div>
+          {% endif %}
+
+          <div class="d-grid mt-4">
+            <button type="submit" class="btn btn-primary">✅ Crear Profesor</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="text-center mt-3">
+      <a href="{{ url_for('professors.list_professors') }}"
+         class="btn btn-outline-secondary btn-sm">
+        ← Volver a Profesores
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}

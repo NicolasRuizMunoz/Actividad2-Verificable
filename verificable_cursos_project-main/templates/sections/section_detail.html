@@ -1,0 +1,162 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Detalle de la Sección{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="card shadow-lg rounded-4">
+    <div class="card-body">
+
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3 class="card-title mb-0">📘 Detalle de la Sección</h3>
+        <div>
+          {% if not course.closed %}
+          <a href="{{ url_for(
+              'sections.edit_section',
+              course_id=course.id,
+              instance_id=instance.id,
+              section_id=section.id
+            ) }}"
+            class="btn btn-warning btn-sm me-2">✏️ Editar</a>
+          <form method="POST"
+                action="{{ url_for(
+                  'sections.delete_section',
+                  course_id=course.id,
+                  instance_id=instance.id,
+                  section_id=section.id
+                ) }}"
+                class="d-inline"
+                onsubmit="return confirm('¿Estás seguro de eliminar esta sección?');">
+            <button type="submit" class="btn btn-danger btn-sm">🗑️ Eliminar</button>
+          </form>
+          {% endif %}
+        </div>
+      </div>
+
+      <ul class="list-group list-group-flush mb-4">
+        <li class="list-group-item"><strong>Número de Sección:</strong> {{ section.section_number }}</li>
+        <li class="list-group-item"><strong>Instancia del Curso:</strong> {{ section.course_instance_id }}</li>
+        <li class="list-group-item"><strong>Total de Personas:</strong> {{ total_people }}</li>
+        <li class="list-group-item"><strong>Esquema:</strong>
+          {{ 'Porcentaje' if section.evaluation_scheme == 'percentage' else 'Peso' }}
+        </li>
+        <li class="list-group-item"><strong>Estado del Curso:</strong> 
+          {% if course.closed %}
+            <span class="badge bg-danger">Cerrado</span>
+          {% else %}
+            <span class="badge bg-success">Abierto</span>
+          {% endif %}
+        </li>
+      </ul>
+
+      <div class="d-flex justify-content-end gap-2 mb-4">
+        <a href="{{ url_for('course_instances.course_instance_detail', course_id=course.id, instance_id=instance.id) }}" 
+           class="btn btn-outline-secondary btn-sm">← Volver</a>
+        {% if not course.closed %}
+        <a href="{{ url_for('sections.assign_professor',
+                            course_id=course.id,
+                            instance_id=instance.id,
+                            section_id=section.id) }}"
+           class="btn btn-outline-primary btn-sm">👨‍🏫 Asignar Profesor</a>
+        {% else %}
+        <button class="btn btn-outline-primary btn-sm" disabled 
+                title="No se pueden asignar profesores en un curso cerrado">
+          👨‍🏫 Asignar Profesor
+        </button>
+        {% endif %}
+        {% if not course.closed %}
+        <a href="{{ url_for('sections.assign_student',
+                            course_id=course.id,
+                            instance_id=instance.id,
+                            section_id=section.id) }}"
+           class="btn btn-outline-primary btn-sm">👨‍🎓 Asignar Estudiante</a>
+        {% else %}
+        <button class="btn btn-outline-primary btn-sm" disabled 
+                title="No se pueden asignar estudiantes en un curso cerrado">
+          👨‍🎓 Asignar Estudiante
+        </button>
+        {% endif %}
+        {% if not course.closed %}
+        <a href="{{ url_for('evaluations.create_evaluation',
+                            course_id=course.id,
+                            instance_id=instance.id,
+                            section_id=section.id) }}"
+           class="btn btn-primary btn-sm">➕ Crear Evaluación</a>
+        {% else %}
+        <button class="btn btn-primary btn-sm" disabled 
+                title="No se pueden crear evaluaciones en un curso cerrado">
+          ➕ Crear Evaluación
+        </button>
+        {% endif %}
+      </div>
+
+      <section class="mt-4">
+        <h4>Profesores Asignados</h4>
+        <ul class="list-group list-group-flush">
+          {% if professors %}
+            {% for professor in professors %}
+              <li class="list-group-item">{{ professor.name }}</li>
+            {% endfor %}
+          {% else %}
+            <li class="list-group-item text-muted">No hay profesores asignados.</li>
+          {% endif %}
+        </ul>
+      </section>
+
+      <section class="mt-4">
+        <h4>Estudiantes Asignados</h4>
+        <ul class="list-group list-group-flush">
+          {% if students %}
+            {% for student in students %}
+              <li class="list-group-item">{{ student.name }}</li>
+            {% endfor %}
+          {% else %}
+            <li class="list-group-item text-muted">No hay estudiantes asignados.</li>
+          {% endif %}
+        </ul>
+      </section>
+
+      <section class="mt-4">
+        <h4>Evaluaciones de esta Sección</h4>
+        {% if evaluations %}
+          <div class="overflow-auto" style="white-space: nowrap;">
+            {% for eval in evaluations %}
+              <div class="card d-inline-block m-2 shadow-sm border border-primary" style="width: 250px;">
+                <div class="card-body d-flex flex-column">
+                  <h5 class="card-title">{{ eval.name }}</h5>
+                    <p class="card-text mb-3">
+                      Tipo: <strong>{{ 'Porcentaje' if section.evaluation_scheme == 'percentage' else 'Peso' }}</strong><br>
+                      Valor: 
+                      {% if section.evaluation_scheme == 'percentage' %}
+                        {{ eval.weight }}%
+                      {% else %}
+                        {{ eval.weight }} pts
+                      {% endif %}
+                    </p>
+                  <a href="{{ url_for(
+                            'grades.section_enter_grades',
+                            course_id=course.id,
+                            instance_id=instance.id,
+                            section_id=section.id,
+                            evaluation_id=eval.id) }}"
+                    class="btn btn-success btn-sm w-100 mb-2">Notas</a>
+                  <a href="{{ url_for(
+                            'evaluations.detail_evaluation',
+                            course_id=course.id,
+                            instance_id=instance.id,
+                            section_id=section.id,
+                            evaluation_id=eval.id) }}"
+                    class="btn btn-outline-primary btn-sm w-100">🔍 Ver Detalle</a>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        {% else %}
+          <p class="text-muted">No hay evaluaciones asociadas a esta sección.</p>
+        {% endif %}
+      </section>
+
+    </div>
+  </div>
+</div>
+{% endblock %}
