@@ -30,7 +30,7 @@ evaluation_mgr = EvaluationManager()
     form_key="form",
     error_key="errors",
 )
-def create_course_instance(
+def create_course_instance( # aca el error documentado
     course_id: int,
     validated: CourseInstanceSchema = None,
 ):

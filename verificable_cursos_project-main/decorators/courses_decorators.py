@@ -70,7 +70,7 @@ def validate_with(schema, template, form_key="form", error_key="errors"):
 
     def decorator(fn):
         @wraps(fn)
-        def wrapper(*args, **kwargs):
+        def wrapper(*args, **kwargs): # aca el error documentado
             if request.method != "POST":
                 return fn(*args, **kwargs)
 

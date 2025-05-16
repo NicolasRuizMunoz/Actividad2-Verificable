@@ -82,7 +82,7 @@ class PopulateDB:
             )
             self.ci_mgr.create_course_instance(ci.course_id, ci.semester, ci.year)
 
-    def load_sections_and_evaluations(self):
+    def load_sections_and_evaluations(self): # Aca el error documentado
         """Load sections and their evaluations from JSON file."""
         data = self.load_json("5-instancia_cursos_con_secciones.json")
 

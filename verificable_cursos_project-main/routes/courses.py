@@ -39,7 +39,9 @@ def list_courses():
     form_key="form",
     error_key="errors",
 )
-def create_course(validated: CourseSchema = None):
+#aca el error documentado
+#aca el error documentado
+def create_course(validated: CourseSchema = None): # Aca el error documentado
     if request.method == "POST":
         res = mgr.create_course(
             code=validated.codigo,

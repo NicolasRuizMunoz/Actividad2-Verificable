@@ -5,7 +5,7 @@ from db import DatabaseConnection
 
 class StudentManager:
     def __init__(self):
-        self.database = DatabaseConnection()
+        self.database = DatabaseConnection() #Aca el error documentado
         self.cursor = self.database.connect()
 
     def create_student(self, name, email, enrollment_date):

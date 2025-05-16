@@ -7,7 +7,7 @@ from db import DatabaseConnection
 
 class EvaluationManager:
     def __init__(self):
-        self.db = DatabaseConnection()
+        self.db = DatabaseConnection() # Aca el error documentado
         self.cur = self.db.connect()
 
     def _execute(

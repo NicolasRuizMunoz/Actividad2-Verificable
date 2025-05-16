@@ -32,7 +32,7 @@ def index_professor():
 
 
 @home_bp.route("/create_schedule", methods=["POST"])
-def create_schedule():
+def create_schedule(): # Aca el error documentado
     try:
         scheduler = SchedulingManager()
         scheduler.clear_schedule()

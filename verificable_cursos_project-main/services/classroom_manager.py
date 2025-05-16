@@ -5,7 +5,7 @@ from db import DatabaseConnection
 
 class ClassroomManager:
     def __init__(self):
-        self.db = DatabaseConnection()
+        self.db = DatabaseConnection() # Aca el error documentado
         self.cur = self.db.connect()
 
     def create_classroom(self, name: str, capacity: int) -> dict:

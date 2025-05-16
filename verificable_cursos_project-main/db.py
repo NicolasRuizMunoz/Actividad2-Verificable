@@ -11,7 +11,7 @@ class DatabaseConnection:
 
     def __new__(cls):
         if cls._instance is None:
-            cls._instance = super(DatabaseConnection, cls).__new__(cls)
+            cls._instance = super(DatabaseConnection, cls).__new__(cls) # Aca el error documentado
             cls._instance.conn = mysql.connector.connect(
                 host=os.getenv("MYSQL_HOST"),
                 port=os.getenv("MYSQL_PORT"),

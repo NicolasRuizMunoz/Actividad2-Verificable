@@ -8,7 +8,7 @@ from settings import STATUS_ERROR
 
 class CourseManager:
     def __init__(self):
-        self.db = DatabaseConnection()
+        self.db = DatabaseConnection() # Aca el error documentado
         self.cur = self.db.connect()
 
     def _execute(

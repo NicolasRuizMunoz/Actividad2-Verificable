@@ -26,7 +26,7 @@ class SchedulingManager:
     ]
 
     def __init__(self):
-        self.db = DatabaseConnection()
+        self.db = DatabaseConnection() # Aca el error documentado
         self.cur = self.db.connect()
         self.classroom_schedule: dict[int, list[tuple[str, time, time]]] = {}
         self.professor_schedule: dict[int, list[tuple[str, time, time]]] = {}
@@ -201,7 +201,7 @@ class SchedulingManager:
 
         return None
 
-    def generate_schedule(self) -> bool:
+    def generate_schedule(self) -> bool: # aca el error documentado
         try:
             self.classroom_schedule.clear()
             self.professor_schedule.clear()

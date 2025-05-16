@@ -26,7 +26,7 @@ def list_students():
 
 @students_bp.route("/create", methods=["GET", "POST"])
 @validate_with(schema=StudentSchema, template=CREATE_STUDENT_PAGE)
-def create_student(validated=None):
+def create_student(validated=None): # aca el error documentado
     if request.method == "POST":
         res = mgr.create_student(
             name=validated.nombre,

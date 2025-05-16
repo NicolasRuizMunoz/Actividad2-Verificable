@@ -8,7 +8,7 @@ from services.evaluations_manager import EvaluationManager
 
 class EvaluationInstanceManager:
     def __init__(self):
-        self.db = DatabaseConnection()
+        self.db = DatabaseConnection() # Aca el error documentado
         self.cur = self.db.connect()
         self.eval_mgr = EvaluationManager()
 

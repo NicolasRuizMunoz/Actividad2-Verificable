@@ -3,7 +3,7 @@ from db import DatabaseConnection
 
 class GradeManager:
     def __init__(self):
-        self.database = DatabaseConnection()
+        self.database = DatabaseConnection() # Aca el error documentado
         self.cursor = self.database.connect()
 
     def get_grades_for_instance(self, instance_id: int) -> dict[int, float]:

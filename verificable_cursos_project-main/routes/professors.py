@@ -29,7 +29,7 @@ def list_professors():
     form_key="form",
     error_key="errors",
 )
-def create_professor(validated=None):
+def create_professor(validated=None): # aca el error documentado
     if request.method == "POST":
         res = mgr.create_professor(name=validated.nombre, email=validated.correo)
         if res["status"] != "ok":

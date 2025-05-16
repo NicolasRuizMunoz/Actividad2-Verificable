@@ -22,7 +22,7 @@ grade_mgr = GradeManager()
 
 
 @grades_bp.route("", methods=["GET", "POST"])
-def section_enter_grades(
+def section_enter_grades( # aca el error documentado
     course_id: int, instance_id: int, section_id: int, evaluation_id: int
 ):
     course = course_mgr.get_course_by_id(course_id)

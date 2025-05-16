@@ -214,7 +214,7 @@ def delete_section(course_id: int, instance_id: int, section_id: int):
 
 
 @sections_bp.route("/<int:section_id>/assign-professor", methods=["GET", "POST"])
-def assign_professor(course_id: int, instance_id: int, section_id: int):
+def assign_professor(course_id: int, instance_id: int, section_id: int): # aca el error documentado
     course = course_mgr.get_course_by_id(course_id)
     if not course:
         return (
@@ -295,7 +295,7 @@ def assign_professor(course_id: int, instance_id: int, section_id: int):
 
 
 @sections_bp.route("/<int:section_id>/assign_student", methods=["GET", "POST"])
-def assign_student(course_id: int, instance_id: int, section_id: int):
+def assign_student(course_id: int, instance_id: int, section_id: int): # aca el error documentado
     course = course_mgr.get_course_by_id(course_id)
     if not course:
         return (
